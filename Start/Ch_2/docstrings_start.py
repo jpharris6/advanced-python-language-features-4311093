@@ -3,6 +3,9 @@
 
 
 def my_function(arg1, arg2=None):
+    """
+    myfunction(arg1, arg2=none) -> doesn't do anything
+    """
     print(arg1, arg2)
 
 
