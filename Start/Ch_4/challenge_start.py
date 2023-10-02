@@ -1,5 +1,6 @@
 # Example file for Advanced Python: Language Features by Joe Marini
 # Programming challenge for Special Class Methods
+from enum import Enum
 
 
 # Challenge:
@@ -18,6 +19,9 @@
 # 5) Successfully execute the sample code provided below.
 
 
+from typing import Any
+
+
 class Book():
     def __init__(self, title, author, pages, cover, antique, price):
         self.title = title
@@ -28,24 +32,55 @@ class Book():
         self.price = price
 
     # TODO: Implement the str and repr functions
-
+    #   str:  "(title) by (author): (pagecount), (cover), (price)"
+    def __str__(self):
+        return f"{self.title} by {self.author}: {self.pages}, {self.cover}, {self.price}"
+    #   repr: "<Book:title:author:pages:cover:antique:genre:price>"
+    def __repr__(self):
+        return f"<Book:{self.title}:{self.author}:{self.pages}:{self.cover}:{self.antique}:{self.price}>"
     # TODO: Implement the adjustedprice attribute
-
+    def __getattr__(self, attr):
+        if attr == "adjustedprice":
+            val = self.price
+            if self.antique:
+                val += 10.00
+            if self.cover == CoverType.PAPERBACK:
+                val -= 2.00
+        return val
+    
     # TODO: Implement comparisons <, >, <=, >=
+    def __ge__(self, other):
+        return self.pages >= other.pages
 
+    def __gt__(self, other):
+        return self.pages > other.pages
+
+    def __lt__(self, other):
+        return self.pages < other.pages
+
+    def __le__(self, other):
+        return self.pages <= other.pages
+
+    def __eq__(self, other):
+        return self.pages == other.pages
+    
 
 # TODO: Implement the Hard/Paperback Enum
+class CoverType(Enum):
+    HARD = 0,
+    PAPERBACK = 1
+
 
 
 books = [
-    Book("War and Peace", "Leo Tolstoy", 1225, "Hard", True, 29.95),
-    Book("Brave New World", "Aldous Huxley", 311, "Paperback", True, 32.50),
-    Book("Crime and Punishment", "Fyodor Dostoevsky", 492, "Hard", False, 19.75),
-    Book("Moby Dick", "Herman Melville", 427, "Paperback", True, 22.95),
-    Book("A Christmas Carol", "Charles Dickens", 66, "Hard", False, 31.95),
-    Book("Animal Farm", "George Orwell", 130, "Paperback", False, 26.95),
-    Book("Farenheit 451", "Ray Bradbury", 256, "Hard", True, 28.95),
-    Book("Jane Eyre", "Charlotte Bronte", 536, "Paperback", False, 34.95)
+    Book("War and Peace", "Leo Tolstoy", 1225, CoverType.HARD, True, 29.95),
+    Book("Brave New World", "Aldous Huxley", 311, CoverType.PAPERBACK, True, 32.50),
+    Book("Crime and Punishment", "Fyodor Dostoevsky", 492, CoverType.HARD, False, 19.75),
+    Book("Moby Dick", "Herman Melville", 427, CoverType.PAPERBACK, True, 22.95),
+    Book("A Christmas Carol", "Charles Dickens", 66, CoverType.HARD, False, 31.95),
+    Book("Animal Farm", "George Orwell", 130, CoverType.PAPERBACK, False, 26.95),
+    Book("Farenheit 451", "Ray Bradbury", 256, CoverType.HARD, True, 28.95),
+    Book("Jane Eyre", "Charlotte Bronte", 536, CoverType.PAPERBACK, False, 34.95)
 ]
 
 # TEST CODE
