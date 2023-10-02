@@ -22,16 +22,16 @@ def string_combiner(*args, unique=False):
     """
     result = ""
     
-    for arg in args:
-        if isinstance(arg, str) or isinstance(arg, int):
-            value = str(arg)
-            if unique is True:
-                for i in value:
-                    if i not in result:
-                        result += i
-            else:
-                result += str(arg)
-#Or
+    # for arg in args:
+    #     if isinstance(arg, str) or isinstance(arg, int):
+    #         value = str(arg)
+    #         if unique is True:
+    #             for i in value:
+    #                 if i not in result:
+    #                     result += i
+    #         else:
+    #             result += str(arg)
+#Or this solution which has no nested for loops.
     for arg in args:
         if isinstance(arg, int):
             result += str(arg)
