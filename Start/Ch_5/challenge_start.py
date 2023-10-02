@@ -39,3 +39,40 @@ test_orders = [
 ]
 
 # TODO: process each order
+for orders in test_orders:
+    total = 0
+    print("--------------")
+    for order in orders:
+        match order:
+            case [garment, size, starch, same_day]:
+                val = 12.95
+                str = ""
+                if starch:
+                    val += 2.00
+                    str = "Starched"
+                if same_day:
+                    val += 10.00
+                    str = "same-day"
+                print(f"Dry Clean: ({size}) {garment}" + str)
+            case [description, weight]:
+                val = weight * 4.95
+                if weight > 15:
+                    discount = val - (val * 0.1)
+                    val = discount
+                print(f"Wash/Fold: {description}, weight: {weight}")
+            case[type, dryclean, size]:
+                val = 25.00
+                str = ""
+                if dryclean:
+                    str = "Dry Clean"
+                print(f"Blanket: ({size}) {type} " + str)
+            case _:
+                print("This is not valid")
+        total += val
+    print(f"Order total: {total:0.2f}")
+    print("--------------")
+    
+
+                    
+            
+
